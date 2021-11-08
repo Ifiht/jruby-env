@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd /home/jovyan
+#======{[ git commands ]}========#
+git config --global user.email "peter@never.lan"
+git config --global user.name "Peter Pan"
+git config --global push.default simple
+#======{[ other commands ]}======#
+echo "config complete"
