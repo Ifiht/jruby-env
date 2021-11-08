@@ -1,3 +1,5 @@
 build-essential
 bison
 flex
+ant
+android-sdk
