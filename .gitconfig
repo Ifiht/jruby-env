@@ -1,3 +1,5 @@
 [user]
 	email = peter@never.lan
 	name = Peter Pan
+[push]
+	default = simple
