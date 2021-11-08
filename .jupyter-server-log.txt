@@ -146,3 +146,11 @@ TermSocket.open: Opened 1
 [I 15:40:37.672 NotebookApp] Saving file at /bashrc
 [I 15:42:45.791 NotebookApp] Saving file at /bashrc
 [I 15:45:00.805 NotebookApp] Saving file at /bashrc
+[I 16:00:38.359 NotebookApp] EOF on FD 13; stopping reading
+[I 16:00:38.460 NotebookApp] Terminal 1 closed
+not able to serialize: expected string or bytes-like object
+Websocket closed
+[I 16:00:40.736 NotebookApp] New terminal with automatic name: 1
+TermSocket.open: 1
+not able to serialize: expected string or bytes-like object
+TermSocket.open: Opened 1
