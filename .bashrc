@@ -117,6 +117,6 @@ if ! shopt -oq posix; then
 fi
 
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u\[\033[00m\]@\[\033[01;34m\]notebook\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/android-sdk/cmdline-tools/latest/bin:/usr/lib/android-sdk/tools/bin:/usr/lib/android-sdk/tools/bin:/usr/lib/android-sdk/platform-tools:$PATH"
 alias ll='ls -al'
 alias l='ls -a'

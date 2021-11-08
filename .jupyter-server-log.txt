@@ -191,3 +191,5 @@ TermSocket.open: Opened 1
 [I 21:33:26.987 NotebookApp] Creating new file in 
 [I 21:33:55.278 NotebookApp] Saving file at /update_dots.sh
 [I 21:34:19.523 NotebookApp] Saving file at /update_dots.sh
+[I 21:43:55.432 NotebookApp] Saving file at /bashrc
+[I 21:45:01.002 NotebookApp] Saving file at /bashrc
