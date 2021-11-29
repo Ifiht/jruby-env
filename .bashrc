@@ -116,6 +116,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
+export ANDROID_HOME="/home/jovyan/android-sdk"
+
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u\[\033[00m\]@\[\033[01;34m\]notebook\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
 export PATH="$HOME/bin:$PATH"
 export PATH="/usr/lib/android-sdk/tools/bin:$PATH"

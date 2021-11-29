@@ -299,3 +299,18 @@ TermSocket.open: Opened 1
 [I 16:26:23.410 NotebookApp] Saving file at /gitignore
 [W 16:26:36.953 NotebookApp] Notebook Ruboto_Master.ipynb is not trusted
 [I 16:26:37.423 NotebookApp] Kernel started: f0f8baa9-06ab-4eb8-b24b-a6ec1bbfb879, name: python3
+[I 16:28:37.301 NotebookApp] Saving file at /Ruboto_Master.ipynb
+[W 16:37:24.745 NotebookApp] Culling 'idle' kernel 'python3' (f0f8baa9-06ab-4eb8-b24b-a6ec1bbfb879) with 1 connections due to 622 seconds of inactivity.
+[I 16:37:24.746 NotebookApp] Kernel shutdown: f0f8baa9-06ab-4eb8-b24b-a6ec1bbfb879
+[I 16:44:54.237 NotebookApp] Saving file at /bashrc
+[W 16:45:04.548 NotebookApp] Notebook Ruboto_Master.ipynb is not trusted
+[I 16:45:05.063 NotebookApp] Kernel started: 95c37aa3-bd63-4f64-a670-3c3d4fcc82cb, name: python3
+[I 16:47:04.875 NotebookApp] Saving file at /Ruboto_Master.ipynb
+[I 16:48:21.511 NotebookApp] EOF on FD 13; stopping reading
+[I 16:48:21.612 NotebookApp] Terminal 1 closed
+not able to serialize: expected string or bytes-like object
+Websocket closed
+[I 16:48:25.969 NotebookApp] New terminal with automatic name: 1
+TermSocket.open: 1
+not able to serialize: expected string or bytes-like object
+TermSocket.open: Opened 1
