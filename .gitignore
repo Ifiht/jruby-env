@@ -1,8 +1,7 @@
-.bundle
+.*
+!.gitignore
+!.bashrc
+!.jupyter/lab/workspaces
 !/android-sdk
 /android-sdk/*
 !/android-sdk/cmdline-tools
-.local/
-.ipython/
-.ipynb_checkpoints/
-.android/
