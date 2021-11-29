@@ -2,3 +2,6 @@
 
 # jruby-env
 Android build environment for JRuby and Ruboto
+
+- http://ruboto.org/documentation.html
+- https://github.com/ruboto/ruboto
