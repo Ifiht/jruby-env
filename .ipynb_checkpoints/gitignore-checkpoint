@@ -5,3 +5,4 @@
 .local/
 .ipython/
 .ipynb_checkpoints/
+.android/

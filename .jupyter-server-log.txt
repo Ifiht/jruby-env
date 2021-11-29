@@ -296,3 +296,6 @@ TermSocket.open: Opened 1
 [I 16:09:28.001 NotebookApp] Saving file at /Ruboto_Master.ipynb
 [W 16:18:24.745 NotebookApp] Culling 'idle' kernel 'python3' (82971ca8-b360-497d-9280-19f15ef2ac73) with 2 connections due to 646 seconds of inactivity.
 [I 16:18:24.749 NotebookApp] Kernel shutdown: 82971ca8-b360-497d-9280-19f15ef2ac73
+[I 16:26:23.410 NotebookApp] Saving file at /gitignore
+[W 16:26:36.953 NotebookApp] Notebook Ruboto_Master.ipynb is not trusted
+[I 16:26:37.423 NotebookApp] Kernel started: f0f8baa9-06ab-4eb8-b24b-a6ec1bbfb879, name: python3
