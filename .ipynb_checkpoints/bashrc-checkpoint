@@ -117,6 +117,13 @@ if ! shopt -oq posix; then
 fi
 
 PS1="${debian_chroot:+($debian_chroot)}\[\033[01;36m\]\u\[\033[00m\]@\[\033[01;34m\]notebook\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "
-export PATH="$HOME/bin:$HOME/android-sdk/cmdline-tools/latest/bin:/usr/lib/android-sdk/tools/bin:/usr/lib/android-sdk/tools/bin:/usr/lib/android-sdk/platform-tools:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="/usr/lib/android-sdk/tools/bin:$PATH"
+export PATH="/usr/lib/android-sdk/tools/bin:$PATH"
+export PATH="/usr/lib/android-sdk/platform-tools:$PATH"
+export PATH="/home/jovyan/android-sdk/cmdline-tools/latest/bin:$PATH"
+export PATH="/home/jovyan/android-sdk/tools:$PATH"
+export PATH="/home/jovyan/android-sdk/tools/bin:$PATH"
+export PATH="/home/jovyan/android-sdk/build-tools/19.1.0:$PATH"
 alias ll='ls -al'
 alias l='ls -a'
