@@ -1,7 +1,11 @@
 .*
 !.gitignore
 !.bashrc
-!.jupyter/lab/workspaces
-!/android-sdk
+!.jupyter/
+.jupyter/*
+!.jupyter/lab
+.jupyter/lab/*
+!.jupyter/lab/user-settings/
+!.jupyter/lab/user-settings/*
 /android-sdk/*
 !/android-sdk/cmdline-tools
