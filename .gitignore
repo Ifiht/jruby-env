@@ -1,3 +1,4 @@
+.bundle
 !/android-sdk
 /android-sdk/*
 !/android-sdk/cmdline-tools
