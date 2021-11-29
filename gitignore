@@ -9,3 +9,4 @@
 !.jupyter/lab/user-settings/*
 /android-sdk/*
 !/android-sdk/cmdline-tools
+!/android-sdk/tools
