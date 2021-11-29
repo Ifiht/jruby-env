@@ -1,178 +1,114 @@
-#!/bin/bash
+#!/bin/sh
+# Copyright 2005-2007, The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-# Attempt to set app_home
-# Resolve links: $0 may be a link
-prg="$0"
-# Need this for relative symlinks.
-while [ -h "$prg" ] ; do
-  ls=`ls -ld "$prg"`
-  link=`expr "$ls" : '.*-> \(.*\)$'`
-  if expr "$link" : '/.*' > /dev/null; then
-    prg="$link"
-  else
-    prg=`dirname "$prg"`"/$link"
-  fi
-done
-saved="`pwd`"
-cd "`dirname \"$prg\"`" >/dev/null
-app_home="`pwd -P`"
-cd "$saved" >/dev/null
-
-ANDROID_WRAPPER_BIN_DIR=${ANDROID_WRAPPER_BIN_DIR:-$app_home/bin}
-ANDROID_WRAPPER_SDK_TIMEOUT=${ANDROID_WRAPPER_SDK_TIMEOUT:-20}
-
-cat <<< \
-"*************************************************************************
-The \"android\" command is deprecated.
-For manual SDK, AVD, and project management, please use Android Studio.
-For command-line tools, use tools/bin/sdkmanager and tools/bin/avdmanager
-*************************************************************************"
-
-function usage {
-  echo "Invalid or unsupported command \"$@\""
-  echo
-  echo "Supported commands are:"
-  echo "android list target"
-  echo "android list avd"
-  echo "android list device"
-  echo "android create avd"
-  echo "android move avd"
-  echo "android delete avd"
-  echo "android list sdk"
-  echo "android update sdk"
-  exit 2
-}
-
-function matches {
-  verbs=$1
-  objects=$2
-  verb=""
-  object=""
-  shift 2
-
-  for arg in "$@"; do
-    if [[ $arg =~ ^- ]]; then
-      continue
-    fi
-    if [[ -z $verb && $verbs =~ ( |^)$arg( |$) ]]; then
-      verb=$arg
-      continue
-    fi
-    if [[ -n $verb && $objects =~ ( |^)$arg( |$) ]]; then
-      object=$arg
-      break
-    fi
-    break
-  done
-  return $([[ -n $verb && -n $object ]])
-}
-
-function echo_and_exec {
-  echo "Running $@"
-  echo
-  exec $@
-}
-
-function parse_filter {
-  local IFS=,
-  for filter in $1; do
-    if [[ $filter == tool || $filter == platform-tool || $filter == doc ]]; then
-      command+=( "$args ${filter}s" )
-    elif [[ $filter == tools || $filter == platform-tools ]]; then
-      command+=( "$args ${filter}" )
-    elif [[ $filter =~ ^lldb ]]; then
-      command+=( "$args ${filter/-/;}" )
-    elif [[ $filter =~ ^build-tools ]]; then
-      command+=( "$args ${filter/build-tools-/build-tools;}" )
-    elif [[ $filter == ndk ]]; then
-      command+=( "$args ndk-bundle" )
-    elif [[ $filter =~ ^android- ]]; then
-      command+=( "$args platforms;$filter" )
-    elif [[ $filter =~ ^extra- ]]; then
-      tmp=${filter//-/;}
-      command+=( "$args ${tmp/extra/extras}" )
+# Set up prog to be the path of this script, including following symlinks,
+# and set up progdir to be the fully-qualified pathname of its directory.
+prog="$0"
+while [ -h "${prog}" ]; do
+    newProg=`/bin/ls -ld "${prog}"`
+    newProg=`expr "${newProg}" : ".* -> \(.*\)$"`
+    if expr "x${newProg}" : 'x/' >/dev/null; then
+        prog="${newProg}"
     else
-      echo Filter $filter not supported
-      exit 2
+        progdir=`dirname "${prog}"`
+        prog="${progdir}/${newProg}"
     fi
-  done
-}
+done
+oldwd=`pwd`
+progdir=`dirname "${prog}"`
+cd "${progdir}"
+progdir=`pwd`
+prog="${progdir}"/`basename "${prog}"`
+cd "${oldwd}"
 
-function confirm_try_sdk {
-  for arg in "$@"; do
-    if [[ $arg == --use-sdk-wrapper ]]; then
-      return 0
-    fi
-  done
-  if [[ -n $USE_SDK_WRAPPER ]]; then
-    return 0
-  fi
-  read -t $ANDROID_WRAPPER_SDK_TIMEOUT -p "\"android\" SDK commands can be translated to sdkmanager commands on a best-effort basis.
-Continue? (This prompt can be suppressed with the --use-sdk-wrapper command-line argument
-or by setting the USE_SDK_WRAPPER environment variable) [y/N]: " trysdkresponse
-  if (( $? > 128 )); then
-    echo "Timed out waiting for input."
-    echo "To suppress this prompt, run with --use-sdk-wrapper or set USE_SDK_WRAPPER."
+jarfile=sdkmanager.jar
+frameworkdir="$progdir"
+if [ ! -r "$frameworkdir/$jarfile" ]
+then
+    frameworkdir=`dirname "$progdir"`/tools/lib
+fi
+if [ ! -r "$frameworkdir/$jarfile" ]
+then
+    frameworkdir=`dirname "$progdir"`/framework
+fi
+if [ ! -r "$frameworkdir/$jarfile" ]
+then
+    echo `basename "$prog"`": can't find $jarfile"
     exit 1
-  fi
-  if [[ ${trysdkresponse,,} == y ]]; then
-    return 0
-  fi
-  echo Aborted
-  exit 1
-}
-
-avd_verbs="list create move delete"
-avd_objects="avd target device"
-
-if matches "$avd_verbs" "$avd_objects" "$@"; then
-  echo_and_exec "$ANDROID_WRAPPER_BIN_DIR/avdmanager" "$@"
 fi
 
-sdk_verbs="list update"
-sdk_objects="sdk"
 
-if matches "$sdk_verbs" "$sdk_objects" "$@"; then
-  confirm_try_sdk $@
-  if [[ $verb == list ]]; then
-    echo_and_exec "$ANDROID_WRAPPER_BIN_DIR/sdkmanager" --list --verbose
-  fi
-  if [[ $verb == update ]]; then
-    command=( "$ANDROID_WRAPPER_BIN_DIR/sdkmanager" )
-    prev=""
-    update_all=1
-    for arg in "$@"; do
-      if [[ $arg == --use-sdk-wrapper || $arg == $verb || $arg == $object ]]; then
-        continue
-      elif [[ $arg == -n ]]; then
-        echo "update sdk -n is not supported"
-        exit 2
-      elif [[ $arg == -s || $arg == --no-https ]]; then
-        command+=("--no_https")
-      elif [[ $arg == -a || $arg == --all ]]; then
-        command+=("--include_obsolete")
-      elif [[ $arg == -p || $arg == --obsolete || $arg == -u || $arg == --no-ui || $arg == --proxy-host ||
-        $arg == --proxy-port || $arg == -t || $arg == --filter ]]; then
-        :
-      elif [[ $prev == --proxy-host ]]; then
-        command+=("--proxy=http" "--proxy_host=$arg")
-      elif [[ $prev == --proxy-port ]]; then
-        command+=("--proxy_port=$arg")
-      elif [[ $prev == -t || $prev == --filter ]]; then
-        update_all=
-        parse_filter $arg
-      else
-        echo Unrecognized argument $arg
-        exit 2
-      fi
+# Check args.
+if [ debug = "$1" ]; then
+    # add this in for debugging
+    java_debug=-agentlib:jdwp=transport=dt_socket,server=y,address=8050,suspend=y
+    shift 1
+else
+    java_debug=
+fi
 
-      prev=$arg
-    done
-    if [[ -n $update_all ]]; then
-      command+=("--update")
+java_cmd="java"
+
+# Mac OS X needs an additional arg, or you get an "illegal thread" complaint.
+if [ `uname` = "Darwin" ]; then
+    os_opts="-XstartOnFirstThread"
+else
+    os_opts=
+fi
+
+if [ `uname` = "Linux" ]; then
+    export GDK_NATIVE_WINDOWS=true
+fi
+
+if [ "$OSTYPE" = "cygwin" ] ; then
+    jarpath=`cygpath -w  "$frameworkdir/$jarfile"`
+    jarpath="$jarpath;"`cygpath -w  "$frameworkdir/swtmenubar.jar"`
+    progdir=`cygpath -w  "$progdir"`
+else
+    jarpath="$frameworkdir/$jarfile:$frameworkdir/swtmenubar.jar"
+fi
+
+# Get the current content of java.ext.dirs so that we can add to it instead of replacing
+javaExtDirs=`"${java_cmd}" -jar "${frameworkdir}/archquery.jar" java.ext.dirs`
+
+# Figure out the path to the swt.jar for the current architecture.
+# if ANDROID_SWT is defined, then just use this.
+# else, if running in the Android source tree, then look for the correct swt folder in prebuilt
+# else, look for the correct swt folder in the SDK under tools/lib/
+swtpath=""
+if [ -n "$ANDROID_SWT" ]; then
+    swtpath="$ANDROID_SWT"
+else
+    vmarch=`"${java_cmd}" -jar "${frameworkdir}/archquery.jar"`
+    if [ -n "$ANDROID_BUILD_TOP" ]; then
+        osname=`uname -s | tr A-Z a-z`
+        swtpath="${ANDROID_BUILD_TOP}/prebuilts/tools/${osname}-${vmarch}/swt"
+    else
+        swtpath="${frameworkdir}/${vmarch}"
     fi
-    echo_and_exec ${command[@]}
-  fi
 fi
 
-usage $@
+if [ ! -d "$swtpath" ]; then
+    echo "SWT folder '${swtpath}' does not exist."
+    echo "Please export ANDROID_SWT to point to the folder containing swt.jar for your platform."
+    exit 1
+fi
+
+# need to use "java.ext.dirs" because "-jar" causes classpath to be ignored
+exec "$java_cmd" \
+    -Xmx256M $os_opts $java_debug \
+    -Dcom.android.sdkmanager.toolsdir="$progdir" \
+    -classpath "$jarpath:$swtpath/swt.jar" \
+    com.android.sdkmanager.Main "$@"

@@ -3,7 +3,7 @@
 <repository name='download cache' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
   <properties size='2'>
     <property name='p2.system' value='true'/>
-    <property name='p2.timestamp' value='1505339688321'/>
+    <property name='p2.timestamp' value='1481587685087'/>
   </properties>
   <mappings size='3'>
     <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
@@ -16,7 +16,7 @@
         <property name='download.size' value='37952'/>
       </properties>
     </artifact>
-    <artifact classifier='binary' id='monitorproduct.executable.gtk.linux.x86_64' version='25.2.2.4333796'>
+    <artifact classifier='binary' id='monitorproduct.executable.gtk.linux.x86_64' version='25.2.5.3567187'>
       <properties size='1'>
         <property name='download.size' value='168388'/>
       </properties>

@@ -30,7 +30,9 @@ oldwd=`pwd`
 progdir=`dirname "${prog}"`
 cd "${progdir}"
 
-vmarch=`bin/archquery`
+javaCmd="java"
+
+vmarch=`${javaCmd} -jar lib/archquery.jar`
 
 app=lib/monitor-${vmarch}/monitor
 if [[ "Darwin" == `uname` ]]; then

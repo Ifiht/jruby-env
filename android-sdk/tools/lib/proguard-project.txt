@@ -1,10 +1,6 @@
 # To enable ProGuard in your project, edit project.properties
 # to define the proguard.config property as described in that file.
 #
-# This file is no longer maintained and is not used by new (2.2+) versions of the
-# Android plugin for Gradle. Instead, the Android plugin for Gradle generates the
-# default rules at build time and stores them in the build directory.
-#
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
 # in ${sdk.dir}/tools/proguard/proguard-android.txt
