@@ -1,0 +1,9 @@
+*.keystore
+.bundle
+.DS_Store
+.idea
+adb_logcat.log
+bin
+gen
+local.properties
+tmp
