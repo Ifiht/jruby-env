@@ -7,4 +7,4 @@ git config --global user.name "Peter Pan"
 git config --global push.default simple
 #======{[ other commands ]}======#
 gem install bundler
-bundle install --gemfile=/home/jovyan/Gemfile
+#bundle install --gemfile=/home/jovyan/Gemfile
