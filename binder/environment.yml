@@ -5,4 +5,3 @@ dependencies:
   - openjdk
   - gcc_linux-64
   - gxx_linux-64
-  - ruby=2.5.*
