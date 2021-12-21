@@ -5,3 +5,7 @@ Android build environment for JRuby and Ruboto
 
 - http://ruboto.org/documentation.html
 - https://github.com/ruboto/ruboto
+
+Java build environment:
+
+- https://spring.io/guides/gs/maven/

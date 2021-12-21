@@ -13,7 +13,7 @@ public class HelloWorld {
         System.out.println("Hello, World");
         // Create runtime instance
                 Ruby runtime = JavaEmbedUtils.initialize(new ArrayList());
-
+                String s = "i = 1 + 3" + System.lineSeparator() + "puts \"This is #{i}xRUBY!!!\"";
                 // Parameters
                 //RubyFixnum paramA = new RubyFixnum(runtime, 1);
                 //RubyFixnum paramB = new RubyFixnum(runtime, 2);
@@ -21,7 +21,7 @@ public class HelloWorld {
                 // Runtime eval method
                 RubyRuntimeAdapter evaler = JavaEmbedUtils.newRuntimeAdapter();
                 //RubyProc additionProcFromEval = (RubyProc)evaler.eval(runtime, "Proc.new { |a, b| a + b }");
-                evaler.eval(runtime, "puts 'This is RUBY!!!'");
+                evaler.eval(runtime, s);
                 //printProcResult(runtime, additionProcFromEval, paramA, paramB);
 
                 // Shutdown and terminate instance
